@@ -33,6 +33,8 @@ setup(name='wcc.remotenews',
           'collective.dexteritytextindexer',
           'plone.app.multilingual',
           'plone.multilingualbehavior',
+          'requests',
+          'wcc.remoteuuid',
           # -*- Extra requirements: -*-
       ],
       extras_require={

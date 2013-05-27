@@ -8,4 +8,7 @@
   -->
 <object name="portal_types" meta_type="Plone Types Tool">
   <!-- -*- extra stuff goes here -*- -->
+  <object name="wcc.remotenews.remotenewsfolder" meta_type="Dexterity FTI" />
+  <object name="wcc.remotenews.remotenewsitem"
+         meta_type="Factory-based Type Information with dynamic views"/>
 </object>

@@ -16,6 +16,12 @@
     <include package=".behavior"/>
     <include package=".portlet"/>
 
+    <class class="Products.ATContentTypes.content.newsitem.ATNewsItem">
+        <implements interface="wcc.remoteuuid.interfaces.IAttributeRemoteUUID"/>
+        <implements interface="wcc.remoteuuid.interfaces.IRemoteUUIDAware"/>
+    </class>
+
+
     <!-- -*- extra stuff goes here -*- -->
 
 </configure>

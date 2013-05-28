@@ -37,6 +37,7 @@ class Synchronizer(grok.Adapter):
 
     def _fetch(self):
         endpoint = self.context.endpoint
+        api_url = endpoint
         if endpoint.endswith('/'):
             api_url = endpoint[:-1]
         api_url = '%s/1.0/news' % (api_url)

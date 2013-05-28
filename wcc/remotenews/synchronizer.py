@@ -17,6 +17,8 @@ from dateutil.parser import parse as parse_date
 from DateTime import DateTime
 from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFCore.utils import getToolByName
+from zope.component import getUtility
+from wcc.jsonapi.interfaces import ISignatureService
 
 class Synchronizer(grok.Adapter):
     grok.implements(ISynchronizer)
@@ -34,8 +36,14 @@ class Synchronizer(grok.Adapter):
         return items
 
     def _fetch(self):
-        api_url = '%s/1.0/news' % (self.context.endpoint)
-        resp = requests.get(api_url, params={'language':self.context.language})
+        endpoint = self.context.endpoint
+        if endpoint.endswith('/'):
+            api_url = endpoint[:-1]
+        api_url = '%s/1.0/news' % (api_url)
+        ss = ISignatureService(self.context)
+        params = ss.sign_params(api_url, {'language':self.context.language})
+        print api_url, str(params)
+        resp = requests.get(api_url, params=params)
         return resp.json
 
     def _update(self, data):

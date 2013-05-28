@@ -30,10 +30,14 @@
 
   <!-- View information -->
   <property name="link_target"></property>
-  <property name="immediate_view">view</property>
-  <property name="default_view">view</property>
+  <property name="immediate_view">folder_summary_view</property>
+  <property name="default_view">folder_summary_view</property>
   <property name="view_methods">
-   <element value="view"/>
+      <element value="folder_summary_view"/>
+      <element value="folder_full_view"/>
+      <element value="folder_tabular_view"/>
+      <element value="atct_album_view"/>
+      <element value="folder_listing"/>
   </property>
   <property name="default_view_fallback">False</property>
   <property name="add_permission">cmf.AddPortalContent</property>

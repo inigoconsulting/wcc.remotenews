@@ -30,4 +30,25 @@ class IRemoteNewsFolder(form.Schema, IImageScaleTraversable):
 
     endpoint = schema.TextLine(
         title=u'API Endpoint',
+        default=u'http://www.oikoumene.org/api'
     )
+
+    q_category = schema.TextLine(
+        title=u'Category',
+        description=(
+            u"Category (subject) tag to query for. Leave blank to " 
+            u"query for all news"
+        ),
+        required=False
+    )
+
+    q_language = schema.TextLine(
+        title=u'Language code',
+        description=u'Language code to import the news from. Leave blank to use current language',
+        default=u'',
+        required=False
+    )
+
+
+
+

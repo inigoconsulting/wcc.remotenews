@@ -41,8 +41,20 @@ class Synchronizer(grok.Adapter):
             api_url = endpoint[:-1]
         api_url = '%s/1.0/news' % (api_url)
         ss = ISignatureService(self.context)
-        params = ss.sign_params(api_url, {'language':self.context.language})
-        print api_url, str(params)
+
+        lang = self.context.language
+        if self.context.q_language and self.context.q_language.strip():
+            lang = self.context.q_language
+        
+        category = None
+        if self.context.q_category and self.context.q_category.strip():
+            category = self.context.q_category
+
+        params = {'language': lang}
+        if category:
+            params['category'] = category
+
+        params = ss.sign_params(api_url, params)
         resp = requests.get(api_url, params=params)
         return resp.json
 

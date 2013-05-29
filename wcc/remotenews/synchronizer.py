@@ -37,10 +37,9 @@ class Synchronizer(grok.Adapter):
 
     def _fetch(self):
         endpoint = self.context.endpoint
-        api_url = endpoint
         if endpoint.endswith('/'):
-            api_url = endpoint[:-1]
-        api_url = '%s/1.0/news' % (api_url)
+            endpoint = endpoint[:-1]
+        api_url = '%s/1.0/news' % (endpoint)
         ss = ISignatureService(self.context)
 
         lang = self.context.language
@@ -57,7 +56,7 @@ class Synchronizer(grok.Adapter):
 
         params = ss.sign_params(api_url, params)
         resp = requests.get(api_url, params=params)
-        return resp.json
+        return resp.json()
 
     def _update(self, data):
         obj = self._constructItem(data)

@@ -114,7 +114,7 @@ class Synchronizer(grok.Adapter):
 
     def _constructItem(self, data):
         uuid = data['uuid']
-        brains = self.context.portal_catalog(remoteUUID=uuid)
+        brains = self.context.portal_catalog(remoteUUID=uuid, Language='all')
         if brains:
             return brains[0].getObject()
         

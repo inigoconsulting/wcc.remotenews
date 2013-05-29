@@ -17,7 +17,7 @@ from plone.app.textfield import RichText
 
 from z3c.relationfield.schema import RelationList, RelationChoice
 from plone.formwidget.contenttree import ObjPathSourceBinder
-
+from plone.multilingualbehavior.directives import languageindependent
 from wcc.remotenews import MessageFactory as _
 
 
@@ -28,13 +28,15 @@ class IRemoteNewsFolder(form.Schema, IImageScaleTraversable):
     A folder displaying news from remote API
     """
 
+    languageindependent('endpoint')
     endpoint = schema.TextLine(
-        title=u'API Endpoint',
+        title=_(u'API Endpoint'),
         default=u'http://www.oikoumene.org/api'
     )
 
+    languageindependent('q_category')
     q_category = schema.TextLine(
-        title=u'Category',
+        title=_(u'Category'),
         description=(
             u"Category (subject) tag to query for. Leave blank to " 
             u"query for all news"
@@ -43,7 +45,7 @@ class IRemoteNewsFolder(form.Schema, IImageScaleTraversable):
     )
 
     q_language = schema.TextLine(
-        title=u'Language code',
+        title=_(u'Language code'),
         description=u'Language code to import the news from. Leave blank to use current language',
         default=u'',
         required=False

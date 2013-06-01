@@ -30,7 +30,7 @@ class RemoteActivities(grok.GlobalUtility):
 
         terms = []
         activities = client.activities(limit=None,
-                language=self.context.language)
+                language=context.language)
         
         for activity in activities:
             terms.append(

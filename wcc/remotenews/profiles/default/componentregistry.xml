@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<componentregistry>
+    <adapters>
+        <adapter
+            for="wcc.remotenews.content.remotenewsfolder.IRemoteNewsFolder"
+            provides="plone.multilingual.interfaces.ILanguageIndependentFieldsManager"
+            factory="wcc.remotenews.multilingual.RemoteNewsFolderLIFM"/>
+    </adapters>
+</componentregistry>

@@ -29,7 +29,8 @@ class RemoteActivities(grok.GlobalUtility):
         client = V10APIClient(context, endpoint)
 
         terms = []
-        activities = client.activities(limit=None)
+        activities = client.activities(limit=None,
+                language=self.context.language)
         
         for activity in activities:
             terms.append(

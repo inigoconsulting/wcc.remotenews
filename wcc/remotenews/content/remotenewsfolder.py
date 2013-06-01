@@ -37,11 +37,20 @@ class IRemoteNewsFolder(form.Schema, IImageScaleTraversable):
     languageindependent('q_category')
     q_category = schema.TextLine(
         title=_(u'Category'),
-        description=(
+        description=_(
             u"Category (subject) tag to query for. Leave blank to " 
             u"query for all news"
         ),
         required=False
+    )
+
+    languageindependent('q_activity')
+    form.widget(q_activity='plone.formwidget.autocomplete.AutocompleteFieldWidget')
+    q_activity = schema.Choice(
+        title=_(u'Activity'),
+        description=_(u'Activity to query news from'),
+        required=False,
+        vocabulary='wcc.remotenews.remoteactivities'
     )
 
     q_language = schema.TextLine(

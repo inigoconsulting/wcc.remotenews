@@ -48,6 +48,9 @@ class Synchronizer(grok.Adapter):
         if self.context.q_category and self.context.q_category.strip():
             category = self.context.q_category
 
+        activity = getattr(self.context, 'q_activity', '')
+        if activity:
+            return client.activity_news(activity=activity)
         return client.news(language=lang, category=category)
 
     def _update(self, data):
@@ -110,7 +113,7 @@ class Synchronizer(grok.Adapter):
             return brains[0].getObject()
         
         tempid = str(time.time())
-        item = _createObjectByType('wcc.remotenews.remotenewsitem',
+        item = _createObjectByType('News Item',
                 self.context, tempid)
         notify(ObjectCreatedEvent(item))
         notify(ObjectAddedEvent(item))

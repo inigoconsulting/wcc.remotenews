@@ -19,6 +19,7 @@ from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
 from wcc.jsonapi.interfaces import ISignatureService
+from wcc.jsonapi.client import V10APIClient
 
 class Synchronizer(grok.Adapter):
     grok.implements(ISynchronizer)
@@ -37,10 +38,7 @@ class Synchronizer(grok.Adapter):
 
     def _fetch(self):
         endpoint = self.context.endpoint
-        if endpoint.endswith('/'):
-            endpoint = endpoint[:-1]
-        api_url = '%s/1.0/news' % (endpoint)
-        ss = ISignatureService(self.context)
+        client = V10APIClient(self.context, self.context.endpoint)
 
         lang = self.context.language
         if self.context.q_language and self.context.q_language.strip():
@@ -50,13 +48,7 @@ class Synchronizer(grok.Adapter):
         if self.context.q_category and self.context.q_category.strip():
             category = self.context.q_category
 
-        params = {'language': lang}
-        if category:
-            params['category'] = category
-
-        params = ss.sign_params(api_url, params)
-        resp = requests.get(api_url, params=params)
-        return resp.json()
+        return client.news(language=lang, category=category)
 
     def _update(self, data):
         obj = self._constructItem(data)
@@ -73,7 +65,7 @@ class Synchronizer(grok.Adapter):
         effective_date = DateTime(parse_date(data['date']))
         obj.getField('effectiveDate').set(obj, effective_date)
 
-        image_url = data['images'].get('large', None)
+        image_url = data['image'].get('large', None)
         self._set_image(obj, image_url)
 
         obj.getField('imageCaption').set(obj, data['image_caption'])

@@ -8,4 +8,5 @@ class RemoteNewsFolderLIFM(LanguageIndependentFieldsManager):
         activity_uuid = getattr(self.context, 'q_activity', '')
         client = V10APIClient(self.context, self.context.endpoint)
         trans_ids = client.translation(activity_uuid)
-        translation.q_activity = trans_ids[translation.language]
+        translation.q_activity = trans_ids.get(translation.language,
+                                                activity_uuid)
